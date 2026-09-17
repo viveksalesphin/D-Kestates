@@ -24,7 +24,7 @@ export default function Footer() {
               alt={`${BRAND.name} logo`}
               width={72}
               height={72}
-              className="rounded-full"
+              className="rounded-full bg-cream p-1"
             />
             <p className="mt-4 font-serif text-2xl">{BRAND.name}</p>
             <p className="mt-1 text-sm text-gold-300">{BRAND.tagline}</p>
