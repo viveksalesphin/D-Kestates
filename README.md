@@ -23,13 +23,13 @@ property advisor).
 npm install
 cp .env.example .env.local   # then fill in real values
 npm run dev                  # http://localhost:3000
-npm run build                # static export → ./out
+npm run build                # production build
+npm start                    # serve the production build (http://localhost:3000)
 ```
 
-This is a **static export** (`output: "export"` in `next.config.ts`): `npm run
-build` produces a self-contained `out/` folder of HTML/CSS/JS with **no Node
-server** required at runtime. Serve `out/` from any static host (Hostinger
-`public_html`). To preview locally: `npx serve out`.
+This is a standard **Next.js (Node) app** — `npm run build` then `npm start`.
+It is deployed on Hostinger as a **Node.js application** (see
+[Deployment](#deployment)), the same way as the Dolphin CRM site.
 
 ## Configuration (important)
 
@@ -48,8 +48,8 @@ config lives in `src/lib/config.ts`. Set these in `.env.local` before launch:
 | `NEXT_PUBLIC_FACEBOOK_URL` / `NEXT_PUBLIC_INSTAGRAM_URL` | Footer social links |
 | `NEXT_PUBLIC_WEB3FORMS_KEY` | **Required** for the enquiry form — free key from [web3forms.com](https://web3forms.com) |
 
-> All `NEXT_PUBLIC_*` values are **inlined at build time**. For the automated
-> deploy, set them in GitHub → Settings → Secrets and variables → Actions
+> All `NEXT_PUBLIC_*` values are **inlined at build time**. On Hostinger, set
+> them as environment variables on the Node.js application before building
 > (see [Deployment](#deployment)).
 
 Until the real phone is set, the site shows an obvious placeholder
@@ -94,27 +94,24 @@ clearly-labelled placeholder for any image whose data has `placeholder: true`
 
 ## Deployment
 
-Static export deployed to Hostinger `public_html` via GitHub Actions
-(`.github/workflows/deploy.yml`): every push to `main` builds `out/` and uploads
-it over FTP.
+Deployed on **Hostinger as a Node.js application** connected to this GitHub
+repo — the same approach as the Dolphin CRM site. Push to `main` → Hostinger
+pulls, builds and restarts the app. No GitHub Actions, no FTP, no static export.
 
-**One-time setup** in GitHub → Settings → Secrets and variables → Actions:
+**Hostinger Node.js app settings:**
 
-| Kind | Name | Value |
-| --- | --- | --- |
-| Secret | `FTP_SERVER` | Hostinger FTP host (e.g. `ftp.dkestates.co.in` or the IP) |
-| Secret | `FTP_USERNAME` | Hostinger FTP username |
-| Secret | `FTP_PASSWORD` | Hostinger FTP password |
-| Secret | `NEXT_PUBLIC_WEB3FORMS_KEY` | Your Web3Forms access key |
-| Variable | `NEXT_PUBLIC_CONTACT_PHONE`, `…_DISPLAY`, `…_WHATSAPP_NUMBER`, `…_CONTACT_EMAIL`, `…_META_PIXEL_ID`, `…_GA_ID`, `…_FACEBOOK_URL`, `…_INSTAGRAM_URL` | Public config (optional) |
+| Setting | Value |
+| --- | --- |
+| Application root / repo | `github.com/viveksalesphin/D-Kestates`, branch `main` |
+| Node version | `20` |
+| Install command | `npm install` |
+| Build command | `npm run build` |
+| Start command | `npm start` (runs `next start`, listens on `$PORT`) |
+| Application URL | `dkestates.co.in` |
 
-Notes:
-- The workflow uploads to `./public_html/`. If your FTP account opens **inside**
-  `public_html`, change `server-dir` to `./` in the workflow.
-- **First deploy:** empty the existing `public_html` once (Hostinger File
-  Manager) so the old raw-source files that caused the 403 are removed.
-- `.htaccess` (custom 404, HTTPS redirect, gzip, caching) ships from
-  `public/.htaccess` and is force-copied into `out/` by the workflow.
+Set the `NEXT_PUBLIC_*` values (and `NEXT_PUBLIC_WEB3FORMS_KEY`) as
+**environment variables on the Hostinger app** so they're inlined during
+`npm run build`.
 
 ## Trust & compliance notes
 

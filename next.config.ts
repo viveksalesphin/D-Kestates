@@ -1,17 +1,14 @@
 import type { NextConfig } from "next";
 
+// Standard Next.js (Node) app — deployed on Hostinger as a Node.js application
+// (npm run build → npm start), the same way as the Dolphin CRM site. No static
+// export: pages are prerendered and served by the Node server, and next/image
+// optimization is available at runtime.
 const nextConfig: NextConfig = {
-  // Fully static build → emits an `out/` folder of static HTML/CSS/JS,
-  // suitable for Hostinger `public_html` (no Node server at runtime).
-  output: "export",
-
-  // Static export cannot use the on-demand Image Optimization server, so images
-  // are served as-is. Assets are pre-compressed to WebP under /public/images.
-  images: { unoptimized: true },
-
-  // Emit `route/index.html` so Apache serves clean URLs like
-  // /projects/wal-serenia-92/ without extra rewrites.
-  trailingSlash: true,
+  poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
 };
 
 export default nextConfig;
