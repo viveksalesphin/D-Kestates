@@ -3,16 +3,18 @@ import Image from "next/image";
 import { BRAND } from "@/lib/config";
 
 /**
- * D&K Estates logo — the circular brand badge (forest green + gold, cream
- * interior). Self-contained artwork, so it sits well on both light and dark
- * backgrounds. Swap the file at /public/images/brand/dk-logo.webp to update.
+ * D&K Estates logo — the circular brand badge (forest green + gold, transparent
+ * background). Self-contained artwork, so it sits well on light and dark.
+ * Height is responsive: comfortable in the compact mobile header, larger in the
+ * taller desktop header. Swap /public/images/brand/dk-logo.webp to update.
  */
 export default function Logo({
   className = "",
-  size = 48,
+  sizeClass = "h-[52px] w-[52px] md:h-[68px] md:w-[68px]",
 }: {
   className?: string;
-  size?: number;
+  /** Tailwind height/width classes controlling the rendered logo size */
+  sizeClass?: string;
 }) {
   return (
     <Link
@@ -23,11 +25,10 @@ export default function Logo({
       <Image
         src="/images/brand/dk-logo.webp"
         alt={`${BRAND.name} logo`}
-        width={size}
-        height={size}
+        width={256}
+        height={256}
         priority
-        className="h-auto w-auto"
-        style={{ height: size, width: size }}
+        className={sizeClass}
       />
       <span className="sr-only">
         {BRAND.name} — {BRAND.tagline}

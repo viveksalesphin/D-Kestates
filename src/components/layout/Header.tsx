@@ -35,7 +35,7 @@ export default function Header() {
       }`}
     >
       <Container className="flex h-16 items-center justify-between md:h-20">
-        <Logo size={52} className="shrink-0" />
+        <Logo className="shrink-0" />
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV_LINKS.map((link) => (
