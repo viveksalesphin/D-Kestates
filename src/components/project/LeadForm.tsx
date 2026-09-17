@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { getStoredUtms, track } from "@/lib/tracking";
+import { WEB3FORMS_ACCESS_KEY, WEB3FORMS_ENDPOINT } from "@/lib/config";
 import type { Project } from "@/lib/types";
 
 const PURPOSES = ["Self-use", "Investment", "Exploring Both"];
@@ -33,6 +34,8 @@ export default function LeadForm({ project }: { project: Project }) {
     timeline: "",
     consent: false,
   });
+  // Honeypot — bots fill this; humans never see it.
+  const [botcheck, setBotcheck] = useState("");
 
   const update = (key: keyof typeof form, value: string | boolean) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -55,25 +58,46 @@ export default function LeadForm({ project }: { project: Project }) {
       return;
     }
 
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setErrorMsg(
+        "The enquiry form isn't configured yet. Please call or WhatsApp us instead.",
+      );
+      return;
+    }
+
     setStatus("submitting");
     try {
-      const res = await fetch("/api/lead", {
+      const utms = getStoredUtms();
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
-          projectSlug: project.slug,
-          projectName: project.projectName,
-          ...form,
-          utms: getStoredUtms(),
-          pageUrl: typeof window !== "undefined" ? window.location.href : "",
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New enquiry — ${project.projectName} (${form.fullName})`,
+          from_name: "D&K Estates Website",
+          botcheck, // honeypot; Web3Forms rejects if filled
+          // Enquiry details
+          name: form.fullName,
+          phone: form.phone,
+          buying_purpose: form.purpose || "Not specified",
+          budget: form.budget || "Not specified",
+          purchase_timeline: form.timeline || "Not specified",
+          project: project.projectName,
+          project_slug: project.slug,
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+          ...utms,
         }),
       });
 
-      if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as
-          | { error?: string }
-          | null;
-        throw new Error(data?.error ?? "Something went wrong.");
+      const data = (await res.json().catch(() => null)) as
+        | { success?: boolean; message?: string }
+        | null;
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.message ?? "Something went wrong.");
       }
 
       // Fire Meta/GA Lead event ONLY on a successful submission.
@@ -125,6 +149,18 @@ export default function LeadForm({ project }: { project: Project }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      {/* Honeypot: visually hidden, off the tab order — bots fill it, humans don't */}
+      <input
+        type="text"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={botcheck}
+        onChange={(e) => setBotcheck(e.target.value)}
+        className="hidden"
+      />
+
       <div>
         <label htmlFor="fullName" className={labelCls}>
           Full Name<span className="text-gold-600"> *</span>

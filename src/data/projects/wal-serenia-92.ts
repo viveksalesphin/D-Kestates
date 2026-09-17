@@ -7,9 +7,9 @@ import type { Project } from "@/lib/types";
  * Figures that were NOT supplied (possession dates, tower/unit counts, exact
  * travel times, land area) are intentionally omitted rather than invented.
  *
- * Images are labelled placeholders until real WAL Serenia renders are dropped
- * in. To swap: add the asset to /public/images/projects/wal-serenia-92/ and set
- * `src` to its path and `placeholder: false`.
+ * Images are the supplied WAL Serenia renders (WebP) under
+ * /public/images/projects/wal-serenia-92/. To swap: replace the asset and point
+ * `src` at it (keep `placeholder: false`).
  */
 export const walSerenia92: Project = {
   slug: "wal-serenia-92",
@@ -45,20 +45,20 @@ export const walSerenia92: Project = {
       "*Pricing is indicative, subject to inventory availability, developer terms and change without prior notice. Statutory and other applicable charges — including GST, stamp duty, registration, IFMS, electricity/water connection deposits and maintenance deposits — may apply and are not necessarily included. Contact D&K Estates for the latest cost sheet.",
   },
   hero: {
-    src: "/images/projects/wal-serenia-92/serenia-pool.png",
+    src: "/images/projects/wal-serenia-92/serenia-pool.webp",
     alt: "WAL Serenia 92 — Wellness Residences with lap pool, Sector 92, Gurugram",
     placeholder: false,
     caption: "Project render — representational",
   },
   gallery: [
     {
-      src: "/images/projects/wal-serenia-92/serenia-towers.png",
+      src: "/images/projects/wal-serenia-92/serenia-towers.webp",
       alt: "WAL Serenia 92 residential towers, Sector 92, Gurugram",
       placeholder: false,
       caption: "Project render — representational",
     },
     {
-      src: "/images/projects/wal-serenia-92/serenia-pool.png",
+      src: "/images/projects/wal-serenia-92/serenia-pool.webp",
       alt: "WAL Serenia 92 wellness amenities and lap pool",
       placeholder: false,
       caption: "Project render — representational",

@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Image
-              src="/images/brand/dk-logo.png"
+              src="/images/brand/dk-logo.webp"
               alt={`${BRAND.name} logo`}
               width={72}
               height={72}

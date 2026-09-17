@@ -82,6 +82,15 @@ export const ANALYTICS = {
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_ID ?? "",
 } as const;
 
+/**
+ * Web3Forms access key (https://web3forms.com) — the lead form submits here
+ * since the static export has no server/API route. The key is public by design
+ * (it maps to your receiving email). Set NEXT_PUBLIC_WEB3FORMS_KEY at build time.
+ */
+export const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+export const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 export function waMeLink(message?: string): string {
   const base = `https://wa.me/${CONTACT.whatsapp}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;

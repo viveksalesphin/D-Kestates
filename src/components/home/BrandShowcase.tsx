@@ -14,7 +14,7 @@ export default function BrandShowcase() {
         <div className="overflow-hidden rounded-2xl shadow-[0_10px_40px_rgba(20,61,47,0.12)]">
           {/* Wide banner — tablet and up */}
           <Image
-            src="/images/brand/brand-wide.png"
+            src="/images/brand/brand-wide.webp"
             alt="D&K Estates — Spaces Today. A Better Tomorrow. Residential, Commercial, Plots & Land and Investment Advisory across Gurugram, NCR, Haryana and Chandigarh."
             width={2056}
             height={765}
@@ -23,7 +23,7 @@ export default function BrandShowcase() {
           />
           {/* Square creative — mobile */}
           <Image
-            src="/images/brand/brand-square.png"
+            src="/images/brand/brand-square.webp"
             alt="D&K Estates — Your Trusted Real Estate Partner. Rooted locally, growing together across Gurugram, NCR, Haryana and Chandigarh."
             width={1254}
             height={1254}

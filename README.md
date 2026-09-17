@@ -23,8 +23,13 @@ property advisor).
 npm install
 cp .env.example .env.local   # then fill in real values
 npm run dev                  # http://localhost:3000
-npm run build && npm run start   # production
+npm run build                # static export → ./out
 ```
+
+This is a **static export** (`output: "export"` in `next.config.ts`): `npm run
+build` produces a self-contained `out/` folder of HTML/CSS/JS with **no Node
+server** required at runtime. Serve `out/` from any static host (Hostinger
+`public_html`). To preview locally: `npx serve out`.
 
 ## Configuration (important)
 
@@ -41,7 +46,11 @@ config lives in `src/lib/config.ts`. Set these in `.env.local` before launch:
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel — script loads only if set |
 | `NEXT_PUBLIC_GA_ID` | GA4 Measurement ID — loads only if set |
 | `NEXT_PUBLIC_FACEBOOK_URL` / `NEXT_PUBLIC_INSTAGRAM_URL` | Footer social links |
-| `LEAD_WEBHOOK_URL` | Optional CRM/webhook the lead API forwards to |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | **Required** for the enquiry form — free key from [web3forms.com](https://web3forms.com) |
+
+> All `NEXT_PUBLIC_*` values are **inlined at build time**. For the automated
+> deploy, set them in GitHub → Settings → Secrets and variables → Actions
+> (see [Deployment](#deployment)).
 
 Until the real phone is set, the site shows an obvious placeholder
 (`+91 00000 00000`) so it never ships a fake real number.
@@ -68,19 +77,44 @@ all update automatically.
 
 ## Images
 
-Real WAL Serenia renders go in `public/images/projects/wal-serenia-92/` — see the
-README there. Until then, `SmartImage` renders **clearly-labelled placeholders**
-instead of presenting stock towers as WAL Serenia.
+Project renders live in `public/images/projects/<slug>/` and brand assets in
+`public/images/brand/`, pre-compressed to **WebP**. `SmartImage` renders a
+clearly-labelled placeholder for any image whose data has `placeholder: true`
+(so a new project never shows a random render before its assets are added).
 
 ## Lead form & tracking
 
-- Form posts to `/api/lead` (`src/app/api/lead/route.ts`) — abstracted so it can
-  later forward to a CRM (e.g. Dolphin CRM), WhatsApp automation, email or a
-  webhook. Set `LEAD_WEBHOOK_URL` to forward.
-- **UTM parameters** are captured on landing and attached to submissions.
+- The enquiry form submits directly to **[Web3Forms](https://web3forms.com)**
+  (no server needed) using `NEXT_PUBLIC_WEB3FORMS_KEY`. Submissions arrive at the
+  email tied to that key. A honeypot field blocks basic spam bots.
+- **UTM parameters** are captured on landing and included in each submission.
 - Meta/GA events: `PageView` (auto), `ViewContent` (project view), `Contact`
   (call/WhatsApp), `Schedule` (site-visit intent), and **`Lead` only after a
   successful submission** — never on form open.
+
+## Deployment
+
+Static export deployed to Hostinger `public_html` via GitHub Actions
+(`.github/workflows/deploy.yml`): every push to `main` builds `out/` and uploads
+it over FTP.
+
+**One-time setup** in GitHub → Settings → Secrets and variables → Actions:
+
+| Kind | Name | Value |
+| --- | --- | --- |
+| Secret | `FTP_SERVER` | Hostinger FTP host (e.g. `ftp.dkestates.co.in` or the IP) |
+| Secret | `FTP_USERNAME` | Hostinger FTP username |
+| Secret | `FTP_PASSWORD` | Hostinger FTP password |
+| Secret | `NEXT_PUBLIC_WEB3FORMS_KEY` | Your Web3Forms access key |
+| Variable | `NEXT_PUBLIC_CONTACT_PHONE`, `…_DISPLAY`, `…_WHATSAPP_NUMBER`, `…_CONTACT_EMAIL`, `…_META_PIXEL_ID`, `…_GA_ID`, `…_FACEBOOK_URL`, `…_INSTAGRAM_URL` | Public config (optional) |
+
+Notes:
+- The workflow uploads to `./public_html/`. If your FTP account opens **inside**
+  `public_html`, change `server-dir` to `./` in the workflow.
+- **First deploy:** empty the existing `public_html` once (Hostinger File
+  Manager) so the old raw-source files that caused the 403 are removed.
+- `.htaccess` (custom 404, HTTPS redirect, gzip, caching) ships from
+  `public/.htaccess` and is force-copied into `out/` by the workflow.
 
 ## Trust & compliance notes
 

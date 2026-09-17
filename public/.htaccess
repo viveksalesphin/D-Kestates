@@ -1,0 +1,38 @@
+# D&K Estates — static site (Hostinger / Apache)
+
+# Custom 404 (Next static export emits /404.html)
+ErrorDocument 404 /404.html
+
+# No directory listing
+Options -Indexes
+
+# Serve index.html for directory URLs (trailingSlash export)
+DirectoryIndex index.html
+
+# Correct MIME type for WebP (older Apache)
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+
+# Redirect HTTP -> HTTPS (safe once SSL is active on the domain)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Gzip/deflate text assets
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# Long cache for hashed static assets & images; short for HTML
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/x-icon "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+</IfModule>

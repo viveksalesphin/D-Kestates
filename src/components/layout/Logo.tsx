@@ -5,7 +5,7 @@ import { BRAND } from "@/lib/config";
 /**
  * D&K Estates logo — the circular brand badge (forest green + gold, cream
  * interior). Self-contained artwork, so it sits well on both light and dark
- * backgrounds. Swap the file at /public/images/brand/dk-logo.png to update.
+ * backgrounds. Swap the file at /public/images/brand/dk-logo.webp to update.
  */
 export default function Logo({
   className = "",
@@ -21,7 +21,7 @@ export default function Logo({
       className={`inline-flex items-center ${className}`}
     >
       <Image
-        src="/images/brand/dk-logo.png"
+        src="/images/brand/dk-logo.webp"
         alt={`${BRAND.name} logo`}
         width={size}
         height={size}
