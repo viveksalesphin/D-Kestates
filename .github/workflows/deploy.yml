@@ -56,5 +56,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./out/
-          # If your FTP account opens INSIDE public_html already, change this to ./
-          server-dir: ./public_html/
+          # This FTP account opens INSIDE public_html, so upload out/ contents
+          # directly to the FTP root. (Do NOT use ./public_html/ here — that
+          # would create public_html/public_html/.)
+          server-dir: ./
