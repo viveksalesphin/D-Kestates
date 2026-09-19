@@ -26,33 +26,29 @@ export const MARKETS = ["Gurugram", "NCR", "Haryana", "Chandigarh"] as const;
 /**
  * Contact details.
  *
- * NOTE: The fallbacks below are PLACEHOLDERS. Set the corresponding
- * NEXT_PUBLIC_* env vars (or edit these values) with the real D&K Estates
- * business phone / WhatsApp / email before launch.
+ * These defaults are the real D&K Estates business contact values, so the site
+ * shows correct info even if the NEXT_PUBLIC_* env vars aren't set. Env vars
+ * (if provided) still override them.
  */
-const PLACEHOLDER_PHONE_E164 = "+910000000000"; // replace me
-const PLACEHOLDER_PHONE_DISPLAY = "+91 00000 00000"; // replace me
+const DEFAULT_PHONE_E164 = "+918920589797";
+const DEFAULT_PHONE_DISPLAY = "+91 89205 89797";
 
 export const CONTACT = {
   /** E.164 format for tel: links, e.g. +919812345678 */
-  phoneE164: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? PLACEHOLDER_PHONE_E164,
+  phoneE164: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? DEFAULT_PHONE_E164,
   /** Human-friendly display, e.g. +91 98123 45678 */
   phoneDisplay:
-    process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY ?? PLACEHOLDER_PHONE_DISPLAY,
+    process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY ?? DEFAULT_PHONE_DISPLAY,
   /** Digits only for wa.me links, e.g. 919812345678 */
   whatsapp: (
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ??
     process.env.NEXT_PUBLIC_CONTACT_PHONE ??
-    PLACEHOLDER_PHONE_E164
+    DEFAULT_PHONE_E164
   ).replace(/[^\d]/g, ""),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@dkestates.co.in",
   addressLine: "Gurugram, Haryana, India",
   serviceAreas: MARKETS.join(" • "),
 } as const;
-
-/** Whether the current contact phone is still the placeholder (used to hint in dev). */
-export const CONTACT_IS_PLACEHOLDER =
-  CONTACT.phoneE164 === PLACEHOLDER_PHONE_E164;
 
 export const SOCIAL = {
   facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "",
