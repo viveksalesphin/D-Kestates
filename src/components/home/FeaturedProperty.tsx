@@ -1,3 +1,5 @@
+import Link from "next/link";
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import SmartImage from "@/components/ui/SmartImage";
@@ -81,6 +83,30 @@ export default function FeaturedProperty({ project }: { project: Project }) {
             </div>
           </div>
         </div>
+
+        {project.promoImage && !project.promoImage.placeholder ? (
+          <div className="mt-10">
+            <Link
+              href={`${href}#enquire`}
+              aria-label={`${project.projectName} — enquire about the current offer`}
+              className="group mx-auto block max-w-2xl overflow-hidden rounded-2xl shadow-[0_10px_40px_rgba(20,61,47,0.15)] ring-1 ring-forest-800/10 transition-transform duration-300 hover:-translate-y-1"
+            >
+              <Image
+                src={project.promoImage.src}
+                alt={project.promoImage.alt}
+                width={1200}
+                height={1200}
+                sizes="(max-width: 768px) 100vw, 672px"
+                className="h-auto w-full"
+              />
+            </Link>
+            {project.promoImage.caption ? (
+              <p className="mx-auto mt-2 max-w-2xl text-center text-[11px] text-ink-soft/70">
+                {project.promoImage.caption}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
       </Container>
     </section>
   );

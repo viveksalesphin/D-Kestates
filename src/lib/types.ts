@@ -102,6 +102,8 @@ export interface Project {
   pricing: ProjectPricing;
   hero: ProjectImage;
   gallery: ProjectImage[];
+  /** Optional promotional/offer creative (e.g. a price-drop banner) */
+  promoImage?: ProjectImage;
   /** Short cards/teaser description */
   shortDescription: string;
   /** Longer paragraphs for the project page intro */

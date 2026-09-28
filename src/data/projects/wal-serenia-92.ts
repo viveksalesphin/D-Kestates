@@ -26,21 +26,21 @@ export const walSerenia92: Project = {
     {
       label: "3 BHK",
       size: "1,250 Sq. Ft.",
-      indicativePrice: "₹1,46,87,500",
-      note: "Indicative base consideration at preferred pricing",
+      indicativePrice: "₹1,37,50,000",
+      note: "Indicative base consideration at ₹11,000 / sq. ft.",
     },
     {
       label: "3 BHK",
       size: "1,350 Sq. Ft.",
-      indicativePrice: "₹1,58,62,500",
-      note: "Indicative base consideration at preferred pricing",
+      indicativePrice: "₹1,48,50,000",
+      note: "Indicative base consideration at ₹11,000 / sq. ft.",
     },
   ],
   pricing: {
-    startingFrom: "Starting from approx. ₹1.47 Cr*",
+    startingFrom: "Starting from approx. ₹1.38 Cr*",
     benchmarkRate: "₹12,500 / sq. ft.",
-    offerRate: "₹11,750 / sq. ft.",
-    offerLabel: "Founder's Edition — limited-period preferred pricing",
+    offerRate: "₹11,000 / sq. ft.",
+    offerLabel: "Exclusive price drop — limited units at this price",
     disclaimer:
       "*Pricing is indicative, subject to inventory availability, developer terms and change without prior notice. Statutory and other applicable charges — including GST, stamp duty, registration, IFMS, electricity/water connection deposits and maintenance deposits — may apply and are not necessarily included. Contact D&K Estates for the latest cost sheet.",
   },
@@ -49,6 +49,12 @@ export const walSerenia92: Project = {
     alt: "WAL Serenia 92 — Wellness Residences with lap pool, Sector 92, Gurugram",
     placeholder: false,
     caption: "Project render — representational",
+  },
+  promoImage: {
+    src: "/images/projects/wal-serenia-92/price-drop.webp",
+    alt: "WAL Serenia 92 — exclusive price drop: 3 BHK wellness residences at ₹11,000 per sq. ft., Sector 92, Gurugram. Limited units at this price.",
+    placeholder: false,
+    caption: "*Price subject to availability and applicable terms/charges",
   },
   gallery: [
     {
