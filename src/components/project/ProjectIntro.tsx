@@ -31,6 +31,7 @@ export default function ProjectIntro({ project }: { project: Project }) {
               width={1254}
               height={1254}
               sizes="(max-width: 768px) 100vw, 768px"
+              unoptimized
               className="h-auto w-full"
             />
           </figure>

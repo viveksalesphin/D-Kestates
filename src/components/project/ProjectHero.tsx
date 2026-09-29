@@ -77,6 +77,7 @@ export default function ProjectHero({ project }: { project: Project }) {
               image={project.hero}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
+              unoptimized
             />
           </div>
           {project.hero.caption ? (

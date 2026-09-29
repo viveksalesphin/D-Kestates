@@ -18,12 +18,19 @@ export default function SmartImage({
   priority = false,
   className = "",
   rounded = "rounded-2xl",
+  unoptimized = false,
 }: {
   image: ProjectImage;
   sizes?: string;
   priority?: boolean;
   className?: string;
   rounded?: string;
+  /**
+   * When true, skip Next.js image optimization so the <img src> is the raw
+   * /public path (e.g. /images/.../file.webp) instead of the /_next/image
+   * endpoint. Default false — every other usage keeps optimization.
+   */
+  unoptimized?: boolean;
 }) {
   if (image.placeholder) {
     return (
@@ -72,6 +79,7 @@ export default function SmartImage({
       fill
       sizes={sizes ?? "100vw"}
       priority={priority}
+      unoptimized={unoptimized}
       className={`object-cover ${rounded} ${className}`}
     />
   );
