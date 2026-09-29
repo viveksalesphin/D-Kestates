@@ -64,7 +64,7 @@ export default function FeaturedProperty({ project }: { project: Project }) {
               <ButtonLink href={href} variant="primary" size="lg">
                 Explore Serenia 92
               </ButtonLink>
-              <ButtonLink href={`${href}#enquire`} variant="secondary" size="lg">
+              <ButtonLink href="/#enquire" variant="secondary" size="lg">
                 Get Price List
               </ButtonLink>
             </div>
@@ -87,7 +87,7 @@ export default function FeaturedProperty({ project }: { project: Project }) {
         {project.promoImage && !project.promoImage.placeholder ? (
           <div className="mt-10">
             <Link
-              href={`${href}#enquire`}
+              href="/#enquire"
               aria-label={`${project.projectName} — enquire about the current offer`}
               className="group mx-auto block max-w-2xl overflow-hidden rounded-2xl shadow-[0_10px_40px_rgba(20,61,47,0.15)] ring-1 ring-forest-800/10 transition-transform duration-300 hover:-translate-y-1"
             >
@@ -97,6 +97,7 @@ export default function FeaturedProperty({ project }: { project: Project }) {
                 width={1200}
                 height={1200}
                 sizes="(max-width: 768px) 100vw, 672px"
+                unoptimized
                 className="h-auto w-full"
               />
             </Link>

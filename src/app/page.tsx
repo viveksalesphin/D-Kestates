@@ -6,6 +6,7 @@ import FeaturedProperty from "@/components/home/FeaturedProperty";
 import WhyDK from "@/components/home/WhyDK";
 import OurApproach from "@/components/home/OurApproach";
 import Markets from "@/components/home/Markets";
+import EnquirySection from "@/components/project/EnquirySection";
 import ContactCTA from "@/components/home/ContactCTA";
 import { getFeaturedProject } from "@/lib/projects";
 import { BRAND, SITE_URL, CONTACT, MARKETS } from "@/lib/config";
@@ -51,6 +52,7 @@ export default function HomePage() {
       <WhyDK />
       <OurApproach />
       <Markets />
+      {featured ? <EnquirySection project={featured} /> : null}
       <ContactCTA />
     </>
   );
